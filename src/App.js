@@ -1,4 +1,4 @@
-import BoardComponent from './components/Board'
+import BoardComponent from './components/BoardComponent'
 import React, { Component } from 'react';
 
 class App extends Component {
