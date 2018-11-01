@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "chess.js": "^0.10.2",
     "cm-chessboard": "^2.13.8",
     "react": "^16.6.0",
     "react-bootstrap": "^0.32.4",
