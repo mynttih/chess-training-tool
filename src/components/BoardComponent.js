@@ -9,6 +9,7 @@ class BoardComponent extends Component {
     this.boardRef = React.createRef()
     this.chess = new Chess()
     this.legalMoves = null
+    this.pieceLookup = {wp: '', wn: 'N', wb: 'B', wq: 'Q', wk: 'K', bp: '', bn: 'N', bb: 'B', bq: 'Q', bk: 'K'}
   }
 
   componentDidMount() {
@@ -17,19 +18,20 @@ class BoardComponent extends Component {
       switch (event.type) {
         case INPUT_EVENT_TYPE.moveStart:
             console.log(`moveStart: ${event.square}`)
-            // return `true`, if input is accepted/valid, `false` aborts the interaction, the piece will not move
             this.setState({
               legalMoves : this.chess.moves({square: event.square})
             })
             return true
         case INPUT_EVENT_TYPE.moveDone:
             console.log(`moveDone: ${event.squareFrom}-${event.squareTo}`)
-            // return true, if input is accepted/valid, `false` takes the move back
-            console.log(this.state.legalMoves.includes(event.squareTo))
-            return this.state.legalMoves.includes(event.squareTo) ? true : false
+            const piece = this.state.board.getPiece(event.squareFrom)
+            const piecePrefix = this.pieceLookup[piece]
+            const moveToValidate = piecePrefix + event.squareTo
+            console.log(moveToValidate)
+            return this.state.legalMoves.includes(moveToValidate) ? true : false
         case INPUT_EVENT_TYPE.moveCanceled:
             console.log(`moveCanceled`)
-    }
+      }
     }, COLOR.white)
     this.setState({
       board: board
